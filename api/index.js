@@ -17,19 +17,21 @@ const products = [
 
 // Connect to database
 connectDB().then(() => {
-  app.listen(3000, () => {
-    console.log(`Server is running at 3000`);
-    // Register routes
+  // app.listen(3000, () => {
+  //   console.log(`Server is running at 3000`);
+  //   // Register routes
+  //
+  //
+  //
+  // });
 
-    app.get('/products', (req, res) => {
-      res.json(products);
-    });
 
-    // app.use("/products", productRoutes);
-  });
+// app.use("/products", productRoutes);
 });
 
-
+app.get('/products', (req, res) => {
+  res.json(products);
+});
 
 app.use(cors()); // Allow all origins by default
 
