@@ -20,10 +20,10 @@ connectDB().then(() => {
   //   console.log(`Server is running at 3000`);
   //   // Register routes
   // });
-app.use("/products", productRoutes);
 }).catch(err =>{
   console.log('Error While Connecting DB')
 })
+app.use("/products", productRoutes);
 
 // app.get('/products', (req, res) => {
 //   res.json(products);
