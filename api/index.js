@@ -6,8 +6,8 @@ const productRoutes = require("../routes/productRoutes");
 
 // Connect to database
 connectDB().then(() => {
-  app.listen(3500, () => {
-    console.log(`Server is running at 3500`);
+  app.listen(3000, () => {
+    console.log(`Server is running at 3000`);
     // Register routes
     app.use("/products", productRoutes);
   });
