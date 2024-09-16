@@ -16,22 +16,15 @@ const products = [
 
 // Connect to database
 connectDB().then(() => {
-  // app.listen(3000, () => {
-  //   console.log(`Server is running at 3000`);
-  //   // Register routes
-  // });
+  console.log('Connected Success!')
 }).catch(err =>{
   console.log('Error While Connecting DB')
 })
 app.use("/products", productRoutes);
 
-// app.get('/products', (req, res) => {
-//   res.json(products);
-// });
+app.use(cors()); // Allow all origins by default
 
-// app.use(cors()); // Allow all origins by default
-
-// app.use(express.json());
+app.use(express.json());
 
 
 // // Start the server
