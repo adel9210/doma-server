@@ -33,9 +33,9 @@ app.get('/products', (req, res) => {
   res.json(products);
 });
 
-app.use(cors()); // Allow all origins by default
+// app.use(cors()); // Allow all origins by default
 
-app.use(express.json());
+// app.use(express.json());
 
 
 // // Start the server
