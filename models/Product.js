@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
   price: Number,
   fullDescription: String,
   shortDescription: String,
-  isNew: Boolean,
+  isNewProduct: Boolean,
   stock: Number,
   discount: Number,
   rating: Number,
