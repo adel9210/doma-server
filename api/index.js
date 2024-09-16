@@ -22,7 +22,7 @@ connectDB().then(() => {
       res.json(products);
     });
 
-    app.use("/products", productRoutes);
+    // app.use("/products", productRoutes);
   });
 });
 
