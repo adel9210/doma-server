@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const connectDB = require("./config/db");
-const productRoutes = require("./routes/productRoutes");
+const connectDB = require("../config/db");
+const productRoutes = require("../routes/productRoutes");
 
 // Connect to database
 connectDB().then(() => {
