@@ -16,7 +16,7 @@ const products = [
 
 
 // Connect to database
-connectDB().then(() => {
+// connectDB().then(() => {
   // app.listen(3000, () => {
   //   console.log(`Server is running at 3000`);
   //   // Register routes
@@ -27,7 +27,7 @@ connectDB().then(() => {
 
 
 // app.use("/products", productRoutes);
-});
+// });
 
 app.get('/products', (req, res) => {
   res.json(products);
