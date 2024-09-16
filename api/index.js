@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const connectDB = require("../config/db");
 const productRoutes = require("../routes/productRoutes");
+const serverless = require('serverless-http');
 
 
 
@@ -39,3 +40,5 @@ app.use(express.json());
 // app.listen(3000, () => {
 //   console.log(`Server is running on http://localhost:${3000}`);
 // });
+
+module.exports.handler = serverless(app);
