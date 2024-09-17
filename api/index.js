@@ -13,9 +13,9 @@ connectDB().then(() => {
   console.log('Error While Connecting DB')
 })
 
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-
 app.use(cors()); // Allow all origins by default
+
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.use(express.json());
 
