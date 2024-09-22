@@ -1,7 +1,10 @@
 const Product = require("../models/Product");
- const upload = require('../config/multer');
+const upload = require('../config/multer');
 const fs = require('fs');
 const path = require('path');
+
+// Utility function to validate ObjectId
+const isValidObjectId = (id) => /^[0-9a-fA-F]{24}$/.test(id);
 
 // Get all products
 exports.getAllProducts = async (req, res) => {
@@ -28,9 +31,7 @@ exports.createProduct = async (req, res) => {
   } = req.body;
 
   if (!name || !price) {
-    return res
-      .status(400)
-      .json({ status: false, message: "All fields are required" });
+    return res.status(400).json({ status: false, message: "All fields are required" });
   }
 
   try {
@@ -52,9 +53,7 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-// Upload images
-
-// Middleware to handle file validation errors
+// Middleware for file validation errors
 const handleFileValidationError = (req, res, next) => {
   if (req.fileValidationError) {
     return res.status(400).json({ message: req.fileValidationError });
@@ -62,41 +61,31 @@ const handleFileValidationError = (req, res, next) => {
   next();
 };
 
-// Middleware to check total file size
+// Middleware for checking total file size
 const handleTotalFileSize = (req, res, next) => {
   if (!req.files) {
     return next();
   }
 
   const totalFileSize = req.files.reduce((total, file) => total + file.size, 0);
-
   if (totalFileSize > 6000000) { // 6 MB limit
     return res.status(400).json({ message: 'Total file size exceeds the 6 MB limit.' });
   }
-
   next();
 };
 
-
-
-// Main upload function with error handling
+// Upload images
 exports.uploadImages = [
-  // Handle file uploads
   upload.array('images'),
-
-  // Handle file validation errors
   handleFileValidationError,
-
-  // Check total file size
   handleTotalFileSize,
-
-  // Final handler to send success response
   (req, res) => {
-    console.log('files=======', req.files);
+    console.log('Uploaded files:', req.files);
     res.status(200).json({ message: 'Files uploaded successfully', files: req.files });
   }
 ];
 
+// Delete a file
 exports.deleteFile = (req, res) => {
   const { filename } = req.params;
   const filePath = path.join(__dirname, '../uploads', filename);
@@ -109,11 +98,17 @@ exports.deleteFile = (req, res) => {
   });
 };
 
-
 // Get a single product by ID
 exports.getProductById = async (req, res) => {
+  const productId = req.params.id;
+
+  // Validate product ID
+  if (!isValidObjectId(productId)) {
+    return res.status(400).json({ message: 'Invalid product ID format.' });
+  }
+
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(productId);
     if (!product) return res.status(404).json({ message: "Product not found" });
     res.status(200).json(product);
   } catch (error) {
@@ -123,75 +118,41 @@ exports.getProductById = async (req, res) => {
 
 // Update a product
 exports.updateProduct = async (req, res) => {
-  const {
-    name,
-    price,
-    fullDescription,
-    shortDescription,
-    isNewProduct,
-    discount,
-    rating,
-    stock,
-  } = req.body;
+  const productId = req.params.id;
+
+  // Validate product ID
+  if (!isValidObjectId(productId)) {
+    return res.status(400).json({ message: 'Invalid product ID format.' });
+  }
+
+  const updates = req.body;
 
   try {
-    const product = await Product.findByIdAndUpdate(
-      req.params.id,
-      {
-        name,
-        price,
-        fullDescription,
-        shortDescription,
-        isNewProduct,
-        discount,
-        rating,
-        stock,
-      },
-      { new: true },
-    );
+    const product = await Product.findByIdAndUpdate(productId, updates, { new: true });
     if (!product) return res.status(404).json({ message: "Product not found" });
     res.status(200).json(product);
   } catch (error) {
-    res.status(500).json({ status: false, message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
-
-
-// Optional helper function to check if an ObjectId is valid
-const isValidObjectId = (id) => {
-  return /^[0-9a-fA-F]{24}$/.test(id); // Check if it's a 24-character hex string
-};
-
-
+// Delete a product
 exports.deleteProduct = async (req, res) => {
   const productId = req.params.id;
 
-  // Check if the product ID is a valid format (optional)
+  // Validate product ID
   if (!isValidObjectId(productId)) {
     return res.status(400).json({ message: 'Invalid product ID format.' });
   }
 
   try {
-    // Attempt to delete the product by ID
     const result = await Product.findByIdAndDelete(productId);
-
-    // If no product was found, return a 404 error
     if (!result) {
       return res.status(404).json({ message: 'Product not found.' });
     }
-
-    // Successfully deleted
     res.status(200).json({ message: `Product ${productId} deleted successfully.` });
   } catch (error) {
     console.error(error);
-
-    // Handle different types of errors
-    if (error.name === 'CastError') {
-      return res.status(400).json({ message: 'Invalid product ID format.' });
-    }
-
-    // Generic server error
-    res.status(500).json({ message: 'Error deleting product.' });
+    res.status(500).json({ message: 'Error deleting product.', error: error.message });
   }
 };
