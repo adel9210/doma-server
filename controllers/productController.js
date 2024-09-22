@@ -1,6 +1,5 @@
 const Product = require("../models/Product");
  const upload = require('../config/multer');
-const checkTotalSize = require('../config/fileSizeMiddleware');
 const fs = require('fs');
 const path = require('path');
 

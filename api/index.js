@@ -1,50 +1,43 @@
 const express = require("express");
 const cors = require("cors");
-const app = express();
+const path = require('path');
 const connectDB = require("../config/db");
 const productRoutes = require("../routes/productRoutes");
 const orderRoutes = require("../routes/orderRoutes");
-const path = require('path');
 
-// Connect to database
-// connectDB().then(() => {
-//   console.log('Connected Success!')
-// }).catch(err =>{
-//   console.log('Error While Connecting DB')
-// })
+const app = express();
+const PORT = process.env.PORT || 3000; // Use environment variable for port
 
-app.use(express.json());
-app.use(cors()); // Should be before defining routes
+// Connect to the database
+connectDB()
+    .then(() => {
+      console.log('Connected to the database successfully!');
+    })
+    .catch(err => {
+      console.error('Error while connecting to the database:', err.message);
+      process.exit(1); // Exit the process on DB connection failure
+    });
+
+// Middleware
+app.use(cors()); // Enable CORS
 app.options('*', cors()); // Handle preflight requests
-// app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-// app.use("/products", productRoutes);
-// app.use("/orders", orderRoutes);
+app.use(express.json()); // Parse JSON bodies
+app.use('/uploads', express.static(path.join(__dirname, '../uploads'))); // Serve static files
 
+// Routes
+app.use("/products", productRoutes);
+app.use("/orders", orderRoutes);
 
-// Sample in-memory data (array of books)
-let books = [
-  { id: 1, title: '1984', author: 'George Orwell' },
-  { id: 2, title: 'To Kill a Mockingbird', author: 'Harper Lee' },
-  { id: 3, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald' }
-];
-
-// DELETE endpoint to remove a book by ID
-app.delete('/books/:id', (req, res) => {
-  const bookId = parseInt(req.params.id);
-  const index = books.findIndex(book => book.id === bookId);
-
-  if (index !== -1) {
-    books.splice(index, 1); // Remove the book from the array
-    return res.status(200).json({message:"deleted"}); // No content to send back
-  }
-
-  return res.status(404).json({ message: 'Book not found' });
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Internal Server Error' });
 });
 
-
-// // Start the server
-app.listen(3000, () => {
-  console.log(`Server is running on http://localhost:${3000}`);
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
+// Uncomment for serverless deployment
 // module.exports.handler = serverless(app);
