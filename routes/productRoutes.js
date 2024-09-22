@@ -2,15 +2,16 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
 
-// Routes
-router.get('/', productController.getAllProducts);
-router.post('/upload-images', productController.uploadImages);
-router.delete('/delete-image/:filename', productController.deleteFile);
+// Specific routes first
+router.get('/:id', productController.getProductById); // Get product by ID
+router.delete('/:id', productController.deleteProduct); // Delete product by ID
+router.put('/:id', productController.updateProduct); // Update product by ID
 
-router.post('/', productController.createProduct);
-router.get('/:id', productController.getProductById);
-router.put('/:id', productController.updateProduct);
-router.delete('/:id', productController.deleteProduct);
-router.delete('/test', productController.test);
+// General routes
+router.get('/', productController.getAllProducts); // Get all products
+router.post('/', productController.createProduct); // Create a new product
+router.post('/upload-images', productController.uploadImages); // Upload images
+router.delete('/delete-image/:filename', productController.deleteFile); // Delete image by filename
+router.delete('/test', productController.test); // Test delete route
 
 module.exports = router;
