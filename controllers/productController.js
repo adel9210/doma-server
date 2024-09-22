@@ -167,3 +167,7 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).json({ status: false, message: error.message });
   }
 };
+
+exports.test = (req, res) => {
+  res.status(200).json({ message: 'Test route' });
+}
