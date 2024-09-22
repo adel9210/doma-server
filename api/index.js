@@ -14,7 +14,8 @@ connectDB().then(() => {
 })
 
 app.use(cors()); // Should be before defining routes
-// app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.options('*', cors()); // Handle preflight requests
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(express.json());
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
