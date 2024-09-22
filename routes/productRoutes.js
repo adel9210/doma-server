@@ -4,7 +4,7 @@ const productController = require('../controllers/productController');
 
 // Specific routes first
 // router.get('/:id', productController.getProductById); // Get product by ID
-router.delete('/:id', productController.deleteProduct); // Delete product by ID
+router.delete('/delete-product/:id', productController.deleteProduct); // Delete product by ID
 // router.put('/:id', productController.updateProduct); // Update product by ID
 
 // General routes
