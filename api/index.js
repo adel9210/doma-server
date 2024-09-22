@@ -15,7 +15,14 @@ connectDB().then(() => {
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-app.use(cors()); // Allow all origins by default
+app.use(cors({
+  origin: '*', // Or specify allowed origins, e.g., ['http://example.com']
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+}));
+
+app.options('*', cors()); // Enable preflight for all routes
+
 
 app.use(express.json());
 
