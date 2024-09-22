@@ -31,7 +31,7 @@ const isValidObjectId = (id) => {
   return /^[0-9a-fA-F]{24}$/.test(id); // Check if it's a 24-character hex string
 };
 
-app.delete('/products', async (req, res) => {
+app.delete('/products/:id', async (req, res) => {
   const productId = req.params.id;
 
   // Check if the product ID is a valid format (optional)
