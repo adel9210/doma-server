@@ -6,22 +6,32 @@ const productRoutes = require("../routes/productRoutes");
 const orderRoutes = require("../routes/orderRoutes");
 const path = require('path');
 
+const allowedOrigins = ['https://doma-store.vercel.app'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or Postman)
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 // Connect to database
 connectDB().then(() => {
   console.log('Connected Success!')
 }).catch(err =>{
   console.log('Error While Connecting DB')
+
 })
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-app.use(cors({
-  origin: '*', // Or specify allowed origins, e.g., ['http://example.com']
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-}));
-
-app.options('*', cors()); // Enable preflight for all routes
+// app.options('*', cors()); // Enable preflight for all routes
 
 
 app.use(express.json());
