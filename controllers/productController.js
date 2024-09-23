@@ -70,7 +70,7 @@ const storage = new CloudinaryStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage, limits: {files: 6, fileSize: 5 * 1024 * 1024} });
 
 
 // Upload images
