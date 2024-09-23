@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const path = require('path');
+// const path = require('path');
 const connectDB = require("../config/db");
 const productRoutes = require("../routes/productRoutes");
 const orderRoutes = require("../routes/orderRoutes");
@@ -19,14 +19,14 @@ connectDB()
     });
 
 // Middleware
-app.use(cors()); // Enable CORS
-app.options('*', cors()); // Handle preflight requests
+// app.use(cors()); // Enable CORS
+// app.options('*', cors()); // Handle preflight requests
 app.use(express.json()); // Parse JSON bodies
-app.use('/uploads', express.static(path.join(__dirname, '../uploads'))); // Serve static files
+// app.use('/uploads', express.static(path.join(__dirname, '../uploads'))); // Serve static files
 
 // Routes
-app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
+app.use("/products", productRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
