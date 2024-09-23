@@ -2,7 +2,13 @@
   "version": 2,
   "functions": {
     "api/**/*.js": {
-      "runtime": "nodejs14.x"
+      "runtime": "vercel-node@0.1.1"
     }
-  }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    }
+  ]
 }
