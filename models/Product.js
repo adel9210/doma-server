@@ -12,7 +12,10 @@ const productSchema = new mongoose.Schema({
   stock: Number,
   discount: Number,
   rating: Number,
-  image: [String],
+  image: [{
+    path: String,
+    filename: String
+  }],
 });
 
 const Product = mongoose.model("Product", productSchema);
