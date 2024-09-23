@@ -66,7 +66,6 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'uploads', // The name of the folder in your Cloudinary account
-    allowed_formats: ['jpg', 'png', 'jpeg'],
   },
 });
 
