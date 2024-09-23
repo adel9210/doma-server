@@ -11,6 +11,6 @@ router.put('/:id', productController.updateProduct); // Update product by ID
 router.get('/', productController.getAllProducts); // Get all products
 router.post('/', productController.createProduct); // Create a new product
 router.post('/upload-images', productController.uploadImages); // Upload images
-router.delete('/delete-image/:filename', productController.deleteFile); // Delete image by filename
+router.delete('/delete-image/:filename', productController.deleteImage); // Delete image by filename
 
 module.exports = router;

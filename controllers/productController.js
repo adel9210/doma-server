@@ -85,17 +85,16 @@ exports.uploadImages = async (req, res) => {
     });
 }
 
-// Delete a file
-exports.deleteFile = (req, res) => {
+// Delete image from cloudinary
+exports.deleteImage = async (req, res) => {
   const { filename } = req.params;
-  const filePath = path.join(__dirname, '../uploads', filename);
-
-  fs.unlink(filePath, (err) => {
-    if (err) {
-      return res.status(404).json({ message: 'File not found' });
-    }
-    res.status(200).json({ message: 'File deleted successfully' });
-  });
+  console.log(filename);
+  try {
+    await cloudinary.uploader.destroy(filename);
+    res.status(200).json({ message: 'Image deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 // Get a single product by ID
