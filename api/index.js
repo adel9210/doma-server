@@ -25,14 +25,14 @@ app.use(express.json()); // Parse JSON bodies
 // app.use('/uploads', express.static(path.join(__dirname, '../uploads'))); // Serve static files
 
 // Routes
-app.use("/orders", orderRoutes);
-app.use("/products", productRoutes);
+app.use(orderRoutes);
+app.use(productRoutes);
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Internal Server Error' });
-});
+// app.use((err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(500).json({ message: 'Internal Server Error' });
+// });
 
 // Start the server
 app.listen(PORT, () => {

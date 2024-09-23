@@ -100,7 +100,7 @@ exports.deleteFile = (req, res) => {
 
 // Get a single product by ID
 exports.getProductById = async (req, res) => {
-  const productId = req.params.id;
+  const productId = req.params.productId;
 
   // Validate product ID
   if (!isValidObjectId(productId)) {
@@ -118,7 +118,7 @@ exports.getProductById = async (req, res) => {
 
 // Update a product
 exports.updateProduct = async (req, res) => {
-  const productId = req.params.id;
+  const productId = req.params.productId;
 
   // Validate product ID
   if (!isValidObjectId(productId)) {
@@ -138,7 +138,7 @@ exports.updateProduct = async (req, res) => {
 
 // Delete a product
 exports.deleteProduct = async (req, res) => {
-  const productId = req.params.id;
+  const productId = req.params.productId;
 
   // Validate product ID
   if (!isValidObjectId(productId)) {
