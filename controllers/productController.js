@@ -55,28 +55,6 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-// Middleware for file validation errors
-const handleFileValidationError = (req, res, next) => {
-  if (req.fileValidationError) {
-    return res.status(400).json({ message: req.fileValidationError });
-  }
-  next();
-};
-
-// Middleware for checking total file size
-const handleTotalFileSize = (req, res, next) => {
-  if (!req.files) {
-    return next();
-  }
-
-  const totalFileSize = req.files.reduce((total, file) => total + file.size, 0);
-  if (totalFileSize > 6000000) { // 6 MB limit
-    return res.status(400).json({ message: 'Total file size exceeds the 6 MB limit.' });
-  }
-  next();
-};
-
-
 // // Configure Cloudinary
 cloudinary.config({
   cloud_name: 'dzau808tk',
@@ -98,7 +76,7 @@ const upload = multer({ storage: storage });
 // Upload images
 
 exports.uploadImages = async (req, res) => {
-    upload.array('images', 5)(req, res, (err) => {
+    upload.array('images', 6)(req, res, (err) => {
         if (err instanceof multer.MulterError) {
         return res.status(400).json({ message: err.message });
         } else if (err) {
