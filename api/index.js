@@ -4,9 +4,9 @@ const cors = require("cors");
 const connectDB = require("../config/db");
 const productRoutes = require("../routes/productRoutes");
 const orderRoutes = require("../routes/orderRoutes");
+const serverless = require('serverless-http');
 
 const app = express();
-const PORT = process.env.PORT || 3000; // Use environment variable for port
 
 // Connect to the database
 connectDB()
@@ -34,10 +34,7 @@ app.use(productRoutes);
 //   res.status(500).json({ message: 'Internal Server Error' });
 // });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
 
 // Uncomment for serverless deployment
 // module.exports.handler = serverless(app);
+module.exports.handler = serverless(app);
