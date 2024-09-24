@@ -30,6 +30,7 @@ exports.createProduct = async (req, res) => {
     rating,
     stock,
     image,
+    category
   } = req.body;
 
   if (!name || !price) {
@@ -47,6 +48,7 @@ exports.createProduct = async (req, res) => {
       rating,
       stock,
       image,
+      category
     });
     await product.save();
     res.status(201).json(product);
@@ -163,3 +165,4 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).json({ message: 'Error deleting product.', error: error.message });
   }
 };
+

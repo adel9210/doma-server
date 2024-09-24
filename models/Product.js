@@ -12,6 +12,7 @@ const productSchema = new mongoose.Schema({
   stock: Number,
   discount: Number,
   rating: Number,
+  category: [String],
   image: [{
     path: String,
     filename: String

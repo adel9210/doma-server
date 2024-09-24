@@ -5,6 +5,7 @@ const connectDB = require("../config/db");
 const productRoutes = require("../routes/productRoutes");
 const orderRoutes = require("../routes/orderRoutes");
 const userRoutes = require("../routes/usersRoute");
+const categoryRoutes = require("../routes/categoryRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3000; // Use environment variable for port
@@ -29,6 +30,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads'))); // Serv
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
 app.use("/users", userRoutes);
+app.use("/categories", categoryRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
