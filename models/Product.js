@@ -6,6 +6,7 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   price: Number,
+  youtubeURL: String,
   fullDescription: String,
   shortDescription: String,
   isNewProduct: Boolean,

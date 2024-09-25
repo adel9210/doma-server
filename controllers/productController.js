@@ -30,6 +30,7 @@ exports.createProduct = async (req, res) => {
     rating,
     stock,
     image,
+    youtubeURL,
     category
   } = req.body;
 
@@ -48,6 +49,7 @@ exports.createProduct = async (req, res) => {
       rating,
       stock,
       image,
+      youtubeURL,
       category
     });
     await product.save();
