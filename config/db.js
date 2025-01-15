@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const MONGO_URL = 'mongodb+srv://adelabodoma:kTvlU7jjlhbAWFnX@cluster0.mnzsn.mongodb.net/doma?retryWrites=true&w=majority&appName=Cluster0';
+const MONGO_URL = 'mongodb+srv://domaeg:LDAFwW53IIYj4Stm@cluster0.qyvod.mongodb.net/doma?retryWrites=true&w=majority&appName=Cluster0';
 
 const connectDB = async () => {
     try {
