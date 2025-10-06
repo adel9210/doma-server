@@ -13,6 +13,10 @@ const productSchema = new mongoose.Schema({
   stock: Number,
   discount: Number,
   rating: Number,
+  isVisible: {
+    type: Boolean,
+    default: true,
+  },
   category: [String],
   image: [{
     path: String,

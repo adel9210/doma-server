@@ -22,20 +22,20 @@ exports.createOrder = async (req, res) => {
 
     if (!customerName || !customerPhone || !customerAddress) {
         return res
-        .status(400)
-        .json({ status: false, message: "All fields are required" });
+            .status(400)
+            .json({ status: false, message: "All fields are required" });
     }
 
     try {
         const order = new Order({
-          customerName,
-          customerEmail,
-          customerPhone,
-          customerAddress,
-          productIds: req.body.productIds,
-          status: "Pending",
-          products
-          // user: req.user._id,
+            customerName,
+            customerEmail,
+            customerPhone,
+            customerAddress,
+            productIds: req.body.productIds,
+            status: "Pending",
+            products
+            // user: req.user._id,
         });
         await order.save();
         res.status(201).json(order);
